@@ -26,13 +26,13 @@ jobs:
         run: dotnet build Fiap.Api.SmartCollect/Fiap.Api.SmartCollect.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish Fiap.Api.SmartCollect/Fiap.Api.SmartCollect.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish Fiap.Api.SmartCollect/Fiap.Api.SmartCollect.csproj -c Release -o ${{runner.workspace}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/smartcollect-api # Diretório onde os artefatos publicados são armazenados
+          path: ${{runner.workspace}}/myapp # Diretório onde os artefatos publicados são armazenados
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,6 +53,7 @@ jobs:
         with:
           app-name: 'smartcollect-api'
           slot-name: 'Production'
-          package: ${{env.DOTNET_ROOT}}/smartcollect-api # Aponta para o pacote publicado
+          package: ${{runner.workspace}}/myapp # Aponta para o diretório correto do pacote publicado
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DF8BA30602004DE398D20C19977353AC }}
+
 
