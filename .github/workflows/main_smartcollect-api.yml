@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp # Diretório onde os artefatos publicados são armazenados
+          path: ${{env.DOTNET_ROOT}}/smartcollect-api # Diretório onde os artefatos publicados são armazenados
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,6 +53,6 @@ jobs:
         with:
           app-name: 'smartcollect-api'
           slot-name: 'Production'
-          package: ${{env.DOTNET_ROOT}}/myapp # Aponta para o pacote publicado
+          package: ${{env.DOTNET_ROOT}}/smartcollect-api # Aponta para o pacote publicado
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DF8BA30602004DE398D20C19977353AC }}
 
